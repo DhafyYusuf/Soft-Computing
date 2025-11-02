@@ -1,0 +1,113 @@
+{% extends "layout.html" %}
+
+{% block title %}Tugas 1 - Soft Computing{% endblock %}
+
+{% block content %}
+    <h2>Tugas 1: Pengenalan Algoritma Soft Computing</h2>
+
+    <div class="algoritma">
+        <h3>1. Algoritma Fuzzy (Logika Fuzzy)</h3>
+        
+        <h4>Pengertian</h4>
+        <p>
+            Logika Fuzzy (Fuzzy Logic) adalah sebuah metode komputasi yang dicetuskan oleh <strong>Prof. Lotfi Zadeh</strong> pada tahun 1965. Berbeda dengan logika klasik (Boolean/crisp) yang hanya mengenal dua nilai kebenaran (0 atau 1, salah atau benar), logika fuzzy memperkenalkan konsep <strong>"derajat kebenaran"</strong>. Ini berarti sebuah pernyataan bisa bernilai "separuh benar" atau "sedikit benar", dengan nilai yang berada di antara 0 dan 1.
+        </p>
+        <p>
+            Pendekatan ini dirancang untuk meniru cara berpikir manusia yang seringkali menangani informasi yang tidak pasti, tidak lengkap, atau bersifat kualitatif (misalnya: "agak dingin", "cukup cepat", "lumayan dekat"). Logika fuzzy bekerja dengan menggunakan <strong>variabel linguistik</strong> (seperti 'Suhu') dan <strong>himpunan fuzzy</strong> (seperti 'Dingin', 'Hangat', 'Panas') yang didefinisikan oleh sebuah <strong>fungsi keanggotaan (membership function)</strong>. Prosesnya biasanya melibatkan tiga tahap:
+        </p>
+        <ol>
+            <li><strong>Fuzzifikasi:</strong> Mengubah input tegas (crisp), seperti suhu 25°C, menjadi derajat keanggotaan dalam himpunan fuzzy (misal: 0.75 'Hangat' dan 0.25 'Panas').</li>
+            <li><strong>Inferensi (Basis Aturan):</strong> Menerapkan aturan-aturan IF-THEN yang telah ditentukan oleh ahli (misal: "JIKA suhu 'Panas' DAN kelembaban 'Tinggi' MAKA AC 'Kencang'").</li>
+            <li><strong>Defuzzifikasi:</strong> Menggabungkan hasil dari semua aturan dan mengubahnya kembali menjadi satu nilai output tegas (crisp), seperti "Putar AC ke 22°C".</li>
+        </ol>
+
+        <h4>Kelebihan</h4>
+        <ul>
+            <li><strong>Sangat Fleksibel:</strong> Mampu menangani ketidakpastian dan data yang bersifat ambigu atau tidak presisi (noise) dengan sangat baik.</li>
+            <li><strong>Intuitif dan Mudah Dipahami:</strong> Konsepnya didasarkan pada bahasa alami (linguistik), sehingga aturan-aturannya seringkali mudah dipahami oleh manusia (expert knowledge).</li>
+            <li><strong>Toleran terhadap Kesalahan:</strong> Sistem fuzzy seringkali tetap dapat beroperasi dengan baik meskipun beberapa input tidak tersedia atau tidak akurat.</li>
+            <li><strong>Pemodelan Non-Linear:</strong> Sangat baik untuk memodelkan sistem yang kompleks dan non-linear yang sulit dijelaskan dengan model matematika konvensional.</li>
+            <li><strong>Penerapan Luas:</strong> Sangat sukses diterapkan di bidang sistem kontrol (misalnya AC, mesin cuci, transmisi mobil) dan sistem pendukung keputusan.</li>
+        </ul>
+
+        <h4>Kekurangan</h4>
+        <ul>
+            <li><strong>Subjektif:</strong> Proses desain (penentuan fungsi keanggotaan dan basis aturan) bisa sangat subjektif dan bergantung pada keahlian (expert) pembuatnya.</li>
+            <li><strong>Kompleksitas Desain:</strong> Membutuhkan banyak penyetelan (tuning) dan uji coba untuk mendapatkan performa yang optimal.</li>
+            <li><strong>Tidak Ada Pembelajaran Otomatis:</strong> Berbeda dengan JST, sistem fuzzy murni tidak "belajar" dari data. Aturannya harus ditentukan secara manual oleh ahli. (Meskipun ada gabungannya: ANFIS).</li>
+            <li><strong>Beban Komputasi:</strong> Jika jumlah variabel input dan aturan menjadi sangat besar, proses inferensi bisa menjadi lambat dan memakan banyak sumber daya komputasi.</li>
+            <li><strong>Validasi yang Sulit:</strong> Membuktikan stabilitas dan keoptimalan sistem fuzzy secara matematis lebih sulit dibandingkan sistem kontrol konvensional.</li>
+        </ul>
+    </div>
+
+    <div class="algoritma">
+        <h3>2. Algoritma Jaringan Saraf Tiruan (JST)</h3>
+        
+        <h4>Pengertian</h4>
+        <p>
+            Jaringan Saraf Tiruan (JST) atau Artificial Neural Network (ANN) adalah model komputasi yang terinspirasi oleh arsitektur dan cara kerja otak biologis manusia. JST terdiri dari jaringan besar berisi unit-unit pemrosesan sederhana yang disebut <strong>neuron</strong> (atau <em>node</em>).
+        </p>
+        <p>
+            Setiap neuron terhubung dengan neuron lain melalui <strong>koneksi (bobot/weight)</strong>. Sebuah neuron menerima sinyal input, memprosesnya (biasanya dengan menjumlahkan input yang telah dikalikan dengan bobotnya), dan kemudian meneruskan hasilnya melalui sebuah <strong>fungsi aktivasi</strong> untuk menghasilkan output.
+        </p>
+        <p>
+            JST "belajar" dari data melalui proses yang disebut <strong>pelatihan (training)</strong>. Selama pelatihan, jaringan diberikan data contoh (input dan output yang diinginkan). Jaringan kemudian menyesuaikan nilai <strong>bobot</strong> pada koneksinya secara iteratif (misalnya menggunakan algoritma <em>Backpropagation</em>) untuk meminimalkan perbedaan antara output yang dihasilkannya dan output yang sebenarnya. Kemampuan inilah yang membuat JST sangat kuat dalam mengenali pola, melakukan klasifikasi, dan membuat prediksi.
+        </j>
+
+        <h4>Kelebihan</h4>
+        <ul>
+            <li><strong>Kemampuan Belajar Adaptif:</strong> Mampu belajar dari data dan menggeneralisasi pengetahuannya untuk memproses data baru yang belum pernah dilihat sebelumnya.</li>
+            <li><strong>Pemrosesan Paralel:</strong> Strukturnya yang terdiri dari banyak neuron memungkinkan pemrosesan informasi secara paralel, yang bisa sangat cepat jika didukung oleh hardware (seperti GPU).</li>
+            <li><strong>Toleransi Kesalahan (Fault Tolerance):</strong> Karena informasi tersebar di seluruh jaringan, kerusakan pada beberapa neuron atau koneksi seringkali tidak melumpuhkan seluruh sistem.</li>
+            <li><strong>Ahli dalam Pola Kompleks:</strong> Sangat unggul dalam masalah di mana polanya sangat kompleks, non-linear, dan sulit dideteksi manusia, seperti pengenalan gambar (Computer Vision) dan pemrosesan bahasa (NLP).</li>
+            <li><strong>Tidak Memerlukan Model Eksplisit:</strong> JST dapat "menemukan" hubungan antar data tanpa perlu kita merumuskan model matematika secara eksplisit.</li>
+        </ul>
+
+        <h4>Kekurangan</h4>
+        <ul>
+            <li><strong>"Kotak Hitam" (Black Box):</strong> JST, terutama model Deep Learning yang kompleks, seringkali sangat sulit untuk diinterpretasikan. Kita mungkin tahu JST memberikan jawaban yang benar, tetapi sangat sulit untuk melacak <em>mengapa</em> atau <em>bagaimana</em> ia sampai pada kesimpulan tersebut.</li>
+            <li><strong>Membutuhkan Data Latih Besar:</strong> Untuk belajar secara efektif dan menghindari <em>overfitting</em>, JST umumnya membutuhkan data pelatihan dalam jumlah yang sangat besar dan berkualitas baik.</li>
+            <li><strong>Intensif Komputasi:</strong> Proses pelatihan, terutama untuk jaringan yang dalam (Deep Learning), membutuhkan waktu yang sangat lama dan sumber daya komputasi yang sangat besar (GPU/TPU).</li>
+            <li><strong>Rentan Overfitting:</strong> Jaringan bisa menjadi terlalu "hafal" dengan data latih sehingga tidak bisa bergeneralisasi dengan baik pada data baru.</li>
+            <li><strong>Desain Arsitektur yang Sulit:</strong> Menentukan arsitektur jaringan yang optimal (jumlah layer, jumlah neuron per layer, fungsi aktivasi, dll.) adalah proses yang rumit dan lebih banyak seni daripada sains (membutuhkan banyak uji coba).</li>
+        </ul>
+    </div>
+
+    <div class="algoritma">
+        <h3>3. Algoritma Genetika (Genetic Algorithm)</h3>
+        
+        <h4>Pengertian</h4>
+        <p>
+            Algoritma Genetika (Genetic Algorithm/GA) adalah sebuah teknik pencarian dan optimasi heuristik yang terinspirasi oleh teori evolusi biologi Charles Darwin: <strong>"survival of the fittest"</strong> (individu terkuat yang bertahan hidup). GA mensimulasikan proses evolusi alami untuk menemukan solusi terbaik dari sebuah masalah.
+        </p>
+        <p>
+            Algoritma ini bekerja dengan sebuah <strong>populasi</strong> yang terdiri dari banyak kandidat solusi (disebut <strong>kromosom</strong> atau <em>individu</em>). Setiap kromosom merepresentasikan satu solusi potensial untuk masalah yang ingin dipecahkan. Prosesnya berjalan dalam beberapa generasi:
+        </p>
+        <ol>
+            <li><strong>Inisialisasi:</strong> Membuat populasi awal berisi solusi-solusi acak.</li>
+            <li><strong>Evaluasi (Fitness):</strong> Setiap solusi dalam populasi dievaluasi menggunakan <strong>fungsi fitness</strong> untuk menentukan seberapa "baik" atau "bugar" solusi tersebut.</li>
+            <li><strong>Seleksi:</strong> Solusi-solusi terbaik (dengan fitness tertinggi) dipilih untuk menjadi "orang tua" bagi generasi berikutnya.</li>
+            <li><strong>Persilangan (Crossover):</strong> "Orang tua" yang terpilih dikombinasikan (disilangkan) untuk menghasilkan "anak" (solusi baru) yang mewarisi sebagian sifat dari kedua orang tuanya.</li>
+            <li><strong>Mutasi:</strong> Beberapa "anak" mengalami perubahan kecil secara acak pada gen mereka (solusinya) untuk menjaga keragaman genetik dan mencegah terjebak di solusi yang itu-itu saja.</li>
+            <li><strong>Terminasi:</strong> Proses ini diulang (Evaluasi -> Seleksi -> Crossover -> Mutasi) selama beberapa generasi sampai kriteria berhenti terpenuhi (misal: ditemukan solusi yang cukup baik, atau jumlah generasi maksimum tercapai).</li>
+        </ol>
+
+        <h4>Kelebihan</h4>
+        <ul>
+            <li><strong>Pencarian Global yang Kuat:</strong> Sangat efektif untuk menjelajahi ruang pencarian yang sangat besar, kompleks, dan "berbatu" (banyak optimal lokal). GA lebih mungkin menemukan solusi optimal global.</li>
+            <li><strong>Fleksibel dan Dapat Diterapkan Luas:</strong> Dapat digunakan untuk berbagai masalah optimasi (penjadwalan, desain, routing) tanpa perlu informasi turunan (gradien) dari masalah tersebut.</li>
+            <li><strong>Mudah Diparalelkan:</strong> Proses evaluasi fitness untuk setiap individu dalam populasi dapat dilakukan secara paralel, sehingga dapat dipercepat secara signifikan.</li>
+            <li><strong>Tangguh (Robust):</strong> Tidak mudah terjebak dalam solusi optimal lokal seperti banyak algoritma pencarian lainnya.</li>
+            <li><strong>Menangani Masalah 'Black Box':</strong> Dapat mengoptimalkan masalah di mana hubungan antara input dan output tidak diketahui atau tidak dapat dirumuskan secara matematis.</li>
+        </ul>
+
+        <h4>Kekurangan</h4>
+        <ul>
+            <li><strong>Lambat Konvergen:</strong> Tergantung pada masalahnya, GA bisa memerlukan waktu yang sangat lama (banyak generasi) untuk konvergen ke solusi yang baik.</li>
+            <li><strong>Penyetelan Parameter yang Rumit:</strong> Performanya sangat bergantung pada pengaturan parameter seperti ukuran populasi, laju <em>crossover</em>, dan laju <em>mutasi</em>. Menemukan parameter yang tepat bisa jadi sulit.</li>
+            <li><strong>Desain Representasi:</strong> Membutuhkan cara yang efektif untuk mengkodekan solusi ke dalam "kromosom" dan merancang fungsi fitness yang akurat. Ini seringkali menjadi bagian tersulit.</li>
+            <li><strong>Tidak Menjamin Optimal:</strong> Sebagai algoritma heuristik, GA tidak <em>menjamin</em> akan menemukan solusi optimal global, meskipun seringkali menemukan solusi yang "sangat baik".</li>
+            <li><strong>Konvergensi Prematur:</strong> Terkadang, populasi bisa terlalu cepat didominasi oleh satu jenis solusi (optimal lokal) sehingga kehilangan keragaman genetik untuk menemukan solusi yang lebih baik.</li>
+        </ul>
+    </div>
+{% endblock %}
