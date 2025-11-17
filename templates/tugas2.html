@@ -1,0 +1,240 @@
+{% extends "layout.html" %}
+
+{% block title %}Tugas 2 - Simulasi Knapsack{% endblock %}
+
+{% block content %}
+
+<style>
+    .page-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    .page-header h2 {
+        font-size: 2.2em;
+        color: #2c3e50;
+        margin-bottom: 10px;
+    }
+    .page-header p {
+        color: #666;
+        font-size: 1.1em;
+    }
+
+    /* Kotak Teori */
+    .theory-box {
+        background: linear-gradient(to right, #ffffff, #f9fcff);
+        border-left: 5px solid #3498db;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        margin-bottom: 40px;
+    }
+    .theory-title {
+        font-size: 1.4em;
+        color: #2980b9;
+        margin-top: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* Grid Layout Utama */
+    .simulation-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr; /* Kolom kanan lebih lebar sedikit */
+        gap: 30px;
+    }
+    @media (max-width: 768px) {
+        .simulation-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Card Style untuk Input & Output */
+    .card {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        border: 1px solid #eee;
+        transition: transform 0.2s;
+    }
+    .card:hover {
+        transform: translateY(-2px);
+    }
+    .card-header {
+        font-size: 1.2em;
+        font-weight: 700;
+        color: #34495e;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #f0f2f5;
+        padding-bottom: 10px;
+    }
+
+    /* Input Elements */
+    .form-group { margin-bottom: 15px; }
+    .form-label { font-weight: 600; color: #555; display: block; margin-bottom: 8px; }
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-family: inherit;
+        box-sizing: border-box; /* Agar padding tidak merusak lebar */
+    }
+    .form-control:focus {
+        border-color: #3498db;
+        outline: none;
+    }
+    textarea.form-control {
+        font-family: 'Consolas', 'Monaco', monospace;
+        font-size: 0.9em;
+        background-color: #fafafa;
+    }
+
+    /* Button */
+    .btn-submit {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        color: white;
+        border: none;
+        padding: 12px;
+        width: 100%;
+        border-radius: 8px;
+        font-size: 1em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: filter 0.2s;
+        margin-top: 10px;
+    }
+    .btn-submit:hover { filter: brightness(110%); }
+
+    /* Result Styles */
+    .result-highlight {
+        background-color: #e8f5e9;
+        border: 1px solid #c8e6c9;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .big-score {
+        font-size: 2.5em;
+        font-weight: 800;
+        color: #2e7d32;
+        margin: 10px 0;
+    }
+    .items-tag {
+        display: inline-block;
+        background-color: #e3f2fd;
+        color: #1565c0;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 0.9em;
+        margin: 2px;
+        border: 1px solid #bbdefb;
+    }
+</style>
+
+<div class="page-header">
+    <h2>Tugas 2: Knapsack Problem</h2>
+    <p>Optimasi Kombinatorial menggunakan Algoritma Genetika</p>
+</div>
+
+<div class="theory-box">
+    <h3 class="theory-title">📚 Apa itu Knapsack Problem?</h3>
+    
+    <div style="margin-top: 15px; line-height: 1.6; color: #444;">
+        <p>
+            <strong>Analogi Sederhana:</strong> Bayangkan Anda adalah seorang pendaki gunung yang hendak berangkat. Anda memiliki sebuah tas ransel (<em>Knapsack</em>) yang memiliki batas berat maksimum (misalnya 15 kg). Di depan Anda ada banyak barang: tenda, kompor, makanan enak, air ekstra, kamera, dll.
+        </p>
+        <p>
+            Setiap barang memiliki dua sifat:
+        </p>
+        <ul style="margin-bottom: 10px;">
+            <li>⚖️ <strong>Berat (Weight):</strong> Seberapa membebani tas Anda.</li>
+            <li>💎 <strong>Nilai (Value):</strong> Seberapa penting/berharga barang itu buat Anda.</li>
+        </ul>
+        <p>
+            <strong>Tujuannya:</strong> Memilih kombinasi barang agar <strong>Total Nilai setinggi mungkin</strong>, tapi <strong>Total Berat tidak boleh melebihi kapasitas tas</strong>.
+            Di sini, komputer menggunakan <em>Algoritma Genetika</em> untuk mensimulasikan evolusi ribuan kombinasi secara cepat guna menemukan solusi terbaik.
+        </p>
+    </div>
+</div>
+
+<div class="simulation-grid">
+    
+    <div class="card">
+        <div class="card-header">⚙️ Konfigurasi Simulasi</div>
+        
+        <form method="POST" action="{{ url_for('tampilkan_tugas', nomor_tugas=2) }}">
+            <div class="form-group">
+                <label class="form-label">Daftar Barang (Nama, Berat, Nilai)</label>
+                <textarea name="items_input" rows="8" class="form-control">{{ default_items }}</textarea>
+                <small style="color: #888; display: block; margin-top: 5px;">Format: Nama, Berat, Nilai (Pisahkan dengan koma)</small>
+            </div>
+
+            <div style="display: flex; gap: 15px;">
+                <div class="form-group" style="flex: 1;">
+                    <label class="form-label">Kapasitas (Kg)</label>
+                    <input type="number" name="capacity" value="{{ default_capacity }}" class="form-control">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label class="form-label">Generasi</label>
+                    <input type="number" name="generations" value="20" min="5" max="100" class="form-control">
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">🚀 Jalankan Algoritma</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <div class="card-header">📊 Hasil Optimasi</div>
+
+        {% if error %}
+            <div style="background-color: #ffebee; color: #c62828; padding: 15px; border-radius: 8px; border-left: 4px solid #d32f2f;">
+                <strong>Terjadi Kesalahan:</strong> {{ error }}
+            </div>
+        {% endif %}
+
+        {% if hasil %}
+            <div class="result-highlight">
+                <div style="font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; color: #555;">Total Nilai Tertinggi</div>
+                <div class="big-score">${{ hasil.total_value }}</div>
+                <div style="color: #555;">Berat Total: <strong>{{ hasil.total_weight }}</strong> / {{ hasil.capacity }} Kg</div>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="margin-top: 0; color: #333;">Barang yang Dipilih:</h4>
+                {% for item in hasil.best_items %}
+                    <span class="items-tag">{{ item }}</span>
+                {% endfor %}
+            </div>
+
+            <div>
+                <h4 style="margin-top: 0; color: #333; font-size: 1em; border-bottom: 1px solid #eee; padding-bottom: 8px;">Riwayat Evolusi (Log)</h4>
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.9em; margin-top: 10px;">
+                    <tr style="background-color: #f8f9fa; text-align: left; color: #666;">
+                        <th style="padding: 8px; border-bottom: 2px solid #eee;">Gen</th>
+                        <th style="padding: 8px; border-bottom: 2px solid #eee;">Kombinasi</th>
+                        <th style="padding: 8px; border-bottom: 2px solid #eee; text-align: right;">Nilai</th>
+                    </tr>
+                    {% for log in hasil.logs %}
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding: 8px; color: #888;">#{{ log.gen }}</td>
+                        
+                        <td style="padding: 8px;">{{ log.list_barang }}</td>
+                        
+                        <td style="padding: 8px; text-align: right; font-weight: bold; color: #2e7d32;">{{ log.value }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+        {% else %}
+            <div style="text-align: center; padding: 40px 20px; color: #999;">
+                <div style="font-size: 3em; margin-bottom: 10px; opacity: 0.3;">⚙️</div>
+                <p>Klik "Jalankan Algoritma" untuk melihat hasil optimasi di sini.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
