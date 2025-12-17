@@ -264,10 +264,5 @@ def tampilkan_tugas(nomor_tugas):
                                default_kota=default_kota, 
                                default_gen=default_gen)
 
-    elif 4 <= nomor_tugas <= 7:
-        return render_template('tugas_placeholder.html', nomor=nomor_tugas)
-    else:
-        return "Tugas tidak ditemukan", 404
-
 if __name__ == '__main__':
     app.run(debug=True)
